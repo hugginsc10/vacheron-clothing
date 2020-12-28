@@ -1,20 +1,20 @@
 # Vacheron Clothing
 An e-commerce desktop and mobil compatible app 
 
-Check us out here: [RobinGood](https://vacheron-clothing.herokuapp.com/)
+Check us out here: [Vacheron Clothing](https://vacheron-clothing.herokuapp.com/)
 
 To log-in as a user, you can either create an account, or login using your Google account
 
 
 ## Screenshots
-## Search by term
-![search by term gif!](https://github.com/alizafriedman/RobinGood-backend/blob/master/documentation/images/captured%20(1).gif)
+## Splash
+![Shop Home gif](https://github.com/hugginsc10/vacheron-clothing/blob/shop-fix/captured%20(5).gif)
 
-## Search by EIN
-![search by ein gif](https://github.com/alizafriedman/RobinGood-backend/blob/master/documentation/images/captured%20(2).gif)
+## Purchase Items
+![purchase gif](https://github.com/hugginsc10/vacheron-clothing/blob/shop-fix/captured%20(6).gif)
 
-## View important information
-![info gif](https://github.com/alizafriedman/RobinGood-backend/blob/master/documentation/images/captured%20(4).gif)
+## Signup / Signin with Google
+![auth gif](https://github.com/hugginsc10/vacheron-clothing/blob/shop-fix/captured%20(7).gif)
 
 
 
