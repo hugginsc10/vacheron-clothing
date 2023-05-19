@@ -2,15 +2,16 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
+
 const config = {
-  apiKey: "AIzaSyCuuSFbg9hcCzpTtcri96UPz-wseF3NAF0",
-  authDomain: "vacheron-clothing.firebaseapp.com",
-  databaseURL: "https://vacheron-clothing.firebaseio.com",
-  projectId: "vacheron-clothing",
-  storageBucket: "vacheron-clothing.appspot.com",
-  messagingSenderId: "455047960995",
-  appId: "1:455047960995:web:3adc3c6e3a15176aefa216",
-  measurementId: "G-PBR3VNEXKS"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABSE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMNT_ID
 };
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
@@ -44,11 +45,11 @@ export const convertCollectionsSnapshotToMap = (collections) => {
   const transformedCollection = collections.docs.map(
     doc => {
       const { title, items } = doc.data();
-      
+
       return {
         routeName: encodeURI(title.toLowerCase()),
         id: doc.id,
-        title, 
+        title,
         items
       }
     }
@@ -58,10 +59,10 @@ export const convertCollectionsSnapshotToMap = (collections) => {
       return accumulator;
     }, {});
   }
-  
+
   export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
     const collectionRef = firestore.collection(collectionKey);
-    
+
     const batch = firestore.batch();
     objectsToAdd.forEach(obj => {
       const newDocRef = collectionRef.doc();
@@ -69,10 +70,10 @@ export const convertCollectionsSnapshotToMap = (collections) => {
     });
     return await batch.commit();
   }
-  
+
   export const auth = firebase.auth();
   export const firestore = firebase.firestore();
-  
+
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
