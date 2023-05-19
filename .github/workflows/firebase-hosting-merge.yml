@@ -17,3 +17,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_VACHERON_CLOTHING }}'
           channelId: live
           projectId: vacheron-clothing
+          
+
