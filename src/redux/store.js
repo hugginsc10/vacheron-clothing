@@ -1,23 +1,29 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import { persistStore } from 'redux-persist';
-import rootReducer from "./root-reducer";
-import logger from 'redux-logger';
-import createSagaMiddleware from 'redux-saga';
+import { configureStore } from "@reduxjs/toolkit";
+import { persistStore } from "redux-persist";
+import userReducer from './user/user.reducer';
+import cartReducer from './cart/cart.reducer';
+import directoryReducer from './directory/directory.reducer';
+import shopReducer from './shop/shop.reducers';
+// import rootReducer from "./root-reducer";
+// import createSagaMiddleware from "redux-saga";
+// import { createLogger } from "redux-logger";
 
-const sagaMiddleware = createSagaMiddleware();
 
-const middleware = [sagaMiddleware];
+// const sagaMiddleware = createSagaMiddleware();
+// const loggerMiddleware = createLogger();
 
-if (process.env.NODE_ENV === 'development') {
-  middleware.push(logger);
-}
+// const middlewares = [sagaMiddleware];
 
-export const store = createStore(
-  rootReducer,
-  compose(
-    applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+// if (process.env.NODE_ENV === "development") {
+//   middlewares.push(loggerMiddleware);
+// }
 
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+    cart: cartReducer,
+    directory: directoryReducer,
+    shop: shopReducer
+  }
+});
 export const persistor = persistStore(store);
