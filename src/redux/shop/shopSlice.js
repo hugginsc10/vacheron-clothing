@@ -23,42 +23,38 @@ const shopSlice = createSlice({
             state.isFetching = false
             state.errorMessage = action.payload
         }
-
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchCollectionsStartAsync.pending, (state, action) => {
+            state.isFetching = true
+        })
+        builder.addCase(fetchCollectionsStartAsync.fulfilled, (state, action) => {
+            state.isFetching = false
+            state.collections = action.payload
+        })
+        builder.addCase(fetchCollectionsStartAsync.rejected, (state, action) => {
+            state.isFetching = false
+            state.errorMessage = action.payload
+        })
 
     }
 })
 
-export const fetchCollectionsStartAsync = () => {
-    return dispatch => {
+export const fetchCollectionsStartAsync = createAsyncThunk(
+    'shop/fetchCollectionsStartAsync',
+    async (payload, thunkAPI) => {
         const collectionRef = firestore.collection("collections");
-        dispatch(fetchCollectionsStart);
-        collectionRef
-            .get()
-            .then(snapshot => {
-                const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-                dispatch(fetchCollectionsSuccess(collectionsMap));
-            })
-            .catch(err => {
-                dispatch(fetchCollectionsFailure(err.message));
-            });
-
-
+        try {
+            const snapshot = await collectionRef.get()
+            const collectionsMap = convertCollectionsSnapshotToMap(snapshot)
+            return collectionsMap
+        } catch (error) {
+           return thunkAPI.rejectWithValue(error.message)
+        }
     }
 
-}
-// export const fetchCollectionsStartAsync = () => {
-//     return dispatch => {
-//          const collectionRef = firestore.collection("collections");
-//       dispatch(fetchCollectionsStart);
-//       collectionRef
-//         .get()
-//         .then(snapshot => {
-//         const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-//         dispatch(fetchCollectionsSuccess(collectionsMap));
-//       })
-//         .catch(error => dispatch(fetchCollectionsFailure(error.message)));
-//     }
-//   }
+)
+
 
 export const { fetchCollectionsStart, fetchCollectionsSuccess, fetchCollectionsFailure } = shopSlice.actions
 
