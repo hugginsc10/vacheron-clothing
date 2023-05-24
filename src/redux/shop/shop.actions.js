@@ -16,7 +16,7 @@ export const fetchCollectionsStart = () => ({
 
 export const fetchCollectionsStartAsync = () => {
   return dispatch => {
-       const collectionRef = firestore.collection("collections");
+    const collectionRef = firestore.collection("collections");
     dispatch(fetchCollectionsStart);
     collectionRef
       .get()
@@ -27,4 +27,4 @@ export const fetchCollectionsStartAsync = () => {
       .catch(error => dispatch(fetchCollectionsFailure(error.message)));
   }
 }
-  
+
