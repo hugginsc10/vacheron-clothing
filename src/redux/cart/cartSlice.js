@@ -1,16 +1,18 @@
-
 import { createSlice } from '@reduxjs/toolkit'
+
+
 
 const initialState = {
     hidden: true,
     cartItems: []
 };
 
+
 const existingCartItems = (cartItems, cartItemToAdd) => {
     return cartItems.find(
         cartItem => cartItem.id === cartItemToAdd.id
         )
-}
+    }
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -50,7 +52,6 @@ const cartSlice = createSlice({
             state.cartItems = state.cartItems.filter(
                 cartItem => cartItem.id !== action.payload.id)
         }
-
     }
 
 })

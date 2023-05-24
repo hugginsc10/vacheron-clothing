@@ -55,6 +55,7 @@ export const fetchCollectionsStartAsync = createAsyncThunk(
 
 )
 
+export const selectCollection = (state) => state.shop.collections
 
 export const { fetchCollectionsStart, fetchCollectionsSuccess, fetchCollectionsFailure } = shopSlice.actions
 
