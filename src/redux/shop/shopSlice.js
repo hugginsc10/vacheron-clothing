@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils'
-
+import { app, convertCollectionsSnapshotToMap, db } from '../../firebase/firebase.utils'
+import { collection, getDocs, query, where, getFirestore, addDoc } from "firebase/firestore";
 
 const initialState = {
     collections: null,
@@ -43,9 +43,9 @@ const shopSlice = createSlice({
 export const fetchCollectionsStartAsync = createAsyncThunk(
     'shop/fetchCollectionsStartAsync',
     async (payload, thunkAPI) => {
-        const collectionRef = firestore.collection("collections");
+        const collectionRef = collection(db, "collections");
         try {
-            const snapshot = await collectionRef.get()
+            const snapshot = await getDocs(collectionRef)
             const collectionsMap = convertCollectionsSnapshotToMap(snapshot)
             return collectionsMap
         } catch (error) {
