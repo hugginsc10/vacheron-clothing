@@ -29,7 +29,7 @@ import {
 } from "firebase/firestore";
 
 const config = {
-  apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
+  apiKey: `${process.env.REACT_APP_FIREBASE_KEY}` || 'mock_key',
   authDomain: `${process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}`,
   databaseURL: `${process.env.REACT_APP_FIREBASE_DATABSE_URL}`,
   projectId: `${process.env.REACT_APP_FIREBASE_PROJECT_ID}`,
@@ -54,7 +54,10 @@ const googleProvider = new GoogleAuthProvider();
 export const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
+    const token = res.credential.accessToken;
     const user = res.user;
+    console.log(token, user);
+
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
     if (docs.docs.length === 0) {
@@ -82,6 +85,7 @@ export const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+    console.log(user);
     await addDoc(collection(db, "users"), {
       uid: user.uid,
       name,

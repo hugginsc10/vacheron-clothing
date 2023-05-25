@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
 import { app, convertCollectionsSnapshotToMap, db } from '../../firebase/firebase.utils'
 import { collection, getDocs, query, where, getFirestore, addDoc } from "firebase/firestore";
 
@@ -55,7 +55,11 @@ export const fetchCollectionsStartAsync = createAsyncThunk(
 
 )
 
-export const selectCollection = (state) => state.shop.collections
+export const selectCollections = (state) => state.shop.collections
+export const selectCollection = (collectionUrlParam) => createSelector(
+    [selectCollections],
+    collections => (collections ? collections[collectionUrlParam] : null)
+)
 
 export const { fetchCollectionsStart, fetchCollectionsSuccess, fetchCollectionsFailure } = shopSlice.actions
 

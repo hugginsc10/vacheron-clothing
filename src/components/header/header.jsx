@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import './header.scss';
-import { auth } from '../../firebase/firebase.utils'
+import { auth, logout } from '../../firebase/firebase.utils'
 import CartIcon from '../cart-icon/cart-icon';
 import CartDropdown from '../cart-dropdown/cart-dropdown';
 import { createStructuredSelector } from 'reselect';
-import { selectCartHidden } from '../../redux/cart/cart.selectors';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { selectCartHidden } from '../../redux/cart/cartSlice';
+import { selectCurrentUser } from '../../redux/user/userSlice';
+
+
 
 const Header = ({ currentUser, hidden }) => {
   return (
@@ -25,7 +27,7 @@ const Header = ({ currentUser, hidden }) => {
         </Link>
         {
           currentUser ? (
-            <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div>)
+            <div className='option' onClick={() => logout(auth)}>SIGN OUT</div>)
             : (<Link className='option' to='/login'>SIGN IN</Link>)
         }
         <CartIcon />

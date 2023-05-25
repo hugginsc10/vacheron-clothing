@@ -4,7 +4,7 @@ import './login.scss'
 import CustomButton from '../custom-button/custom-button'
 import {auth, signInWithGoogle, logInWithEmailAndPassword } from '../../firebase/firebase.utils'
 import { useAuthState } from 'react-firebase-hooks/auth';
-
+import { selectCurrentUser } from "../../redux/user/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,13 +17,26 @@ const Login = () => {
     }
 
 
+
   }, [user, loading]);
+
+
+  const handleSubmit =  async event => {
+
+    event.preventDefault();
+      try {
+      await logInWithEmailAndPassword(email, password)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   return (
     <div className="sign-in">
         <h2>I already have an account</h2>
         <span>Sign in with your email and password</span>
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <FormInput
             name="email"
             type="email"
@@ -41,7 +54,7 @@ const Login = () => {
             required />
 
           <div className='buttons'>
-          <CustomButton type='submit' onClick={() => logInWithEmailAndPassword(email, password)}> Sign In </CustomButton>
+          <CustomButton type='submit' onClick={(e) => handleSubmit(e)}> Sign In </CustomButton>
           <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
             {''}Sign in with Google{' '}
           </CustomButton>

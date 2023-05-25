@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
 
 
 
@@ -8,11 +8,36 @@ const initialState = {
 };
 
 
-const existingCartItems = (cartItems, cartItemToAdd) => {
+export const selectCart = state => state.cart;
+export const selectCartItems = createSelector(
+    [selectCart],
+    (cart) => cart.cartItems
+  );
+
+  export const selectCartItemsCount = createSelector(
+    [selectCartItems],
+    cartItems => cartItems.reduce(
+    (accumalatedQuantity, cartItem) => accumalatedQuantity + cartItem.quantity, 0
+    )
+  )
+
+  export const selectCartTotal = createSelector(
+    [selectCartItems],
+    cartItems => cartItems.reduce(
+      (accumalatedQuantity, cartItem) => accumalatedQuantity +  cartItem.quantity * cartItem.price, 0
+    )
+  )
+
+  export const selectCartHidden = createSelector(
+    [selectCart],
+    cart => cart.hidden
+  )
+export const existingCartItems = (cartItems, cartItemToAdd) => {
     return cartItems.find(
-        cartItem => cartItem.id === cartItemToAdd.id
+        (cartItem) => cartItem.id === cartItemToAdd.id
         )
     }
+
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -24,8 +49,8 @@ const cartSlice = createSlice({
             reducer(state, action) {
             state.cartItems.push(action.payload)
             },
-            prepare(cartItems, item) {
-                const existingCartItem = existingCartItems(cartItems, item)
+            prepare(item) {
+                const existingCartItem = initialState.cartItems.find(cartItem => cartItem.id === item.id)
                 if (existingCartItem) {
                     return {
                         payload: {
@@ -51,7 +76,7 @@ const cartSlice = createSlice({
         clearItemFromCart: (state, action) => {
             state.cartItems = state.cartItems.filter(
                 cartItem => cartItem.id !== action.payload.id)
-        }
+            }
     }
 
 })
