@@ -21,28 +21,28 @@ const SignUp = () => {
                 type='text'
                 name='displayName'
                 value={displayName}
-                handleChange={setDisplayName}
+                handleChange={(e) => setDisplayName(e.target.value)}
                 label='Display Name'
                 required />
               <FormInput
                 type='email'
                 name='email'
                 value={email}
-                handleChange={setEmail}
+                handleChange={(e) => setEmail(e.target.value)}
                 label='Email'
                 required />
               <FormInput
                 type='password'
                 name='password'
                 value={password}
-                handleChange={setPassword}
+                handleChange={(e) => setPassword(e.target.value)}
                 label='Password'
                 required />
               <FormInput
                 type='password'
                 name='confirmPassword'
                 value={confirmPassword}
-                handleChange={setConfirmPassword}
+                handleChange={(e) => setConfirmPassword(e.target.value)}
                 label='Confirm Password'
                 required />
               <CustomButton type='submit' onClick={() => registerWithEmailAndPassword(auth, email, password)}>SIGN UP</CustomButton>

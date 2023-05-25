@@ -16,7 +16,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
-  signOut
+  signOut,
+  onAuthStateChanged
 } from "firebase/auth";
 import {
   getFirestore,
@@ -81,14 +82,14 @@ export const logInWithEmailAndPassword = async (email, password) => {
     alert(err.message);
   }
 };
-export const registerWithEmailAndPassword = async (name, email, password) => {
+export const registerWithEmailAndPassword = async (email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
     console.log(user);
     await addDoc(collection(db, "users"), {
       uid: user.uid,
-      name,
+      name: user.displayName,
       authProvider: "local",
       email,
     });

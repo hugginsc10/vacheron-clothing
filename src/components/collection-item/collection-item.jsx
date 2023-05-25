@@ -1,15 +1,15 @@
 import React from 'react'
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux/cart/cartSlice';
 import './collection-item.scss';
 import CustomButton from '../custom-button/custom-button';
 
 
 
-const CollectionItem = ({ item}) => {
-  const cart = useSelector(state => state.cart);
+const CollectionItem = ({ item }) => {
+  const cartItems = useSelector(state => state.cart.cartItems);
   const dispatch = useDispatch();
-  const { name, price, imageUrl } = item;
+  const { name, price, imageUrl, quantity } = item;
   return (
     <div className="collection-item">
       <div className='image'

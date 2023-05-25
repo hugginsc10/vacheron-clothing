@@ -6,28 +6,46 @@ import {
 } from 'react-router-dom';
 import './App.css'
 
-import { setCurrentUser, selectCurrentUser } from './redux/user/userSlice';
+import { setCurrentUser, selectCurrentUser, login, logout } from './redux/user/userSlice';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import HomePage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
 import CheckoutPage from './pages/checkout/checkout';
 import Header from './components/header/header';
 import LoginAndRegisterPage from './pages/login-register-page/login-register-page'
-import { auth, createUserProfileDocument, addCollectionAndDocuments, db } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument, addCollectionAndDocuments, db} from './firebase/firebase.utils';
+import { onAuthStateChanged } from 'firebase/auth';
 import { createStructuredSelector } from 'reselect';
 import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDoc, query, where } from 'firebase/firestore';
 const App = () => {
   const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(auth);
+  const currentUser = useSelector(selectCurrentUser)
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (userAuth) => {
+      if (userAuth) {
+        dispatch(
+          login({
+          uid: userAuth.uid,
+          email: userAuth.email,
+          displayName: userAuth.displayName,
+        })
+        )
+      } else {
+        dispatch(logout())
+      }
+    })
+  }, [])
 
   const fetchUser = async () => {
-    console.log(user);
+
     try {
       const q = query(collection(db, "users"), where("uid", "==", user.uid));
-      const doc = await getDocs(q);
+      console.log(q)
+      const doc = await getDoc(q);
       console.log(doc, 'fetchUser - doc');
       const data = doc.docs[0].data();
       dispatch(setCurrentUser(data));
@@ -35,13 +53,13 @@ const App = () => {
     console.error(err);
   }
   }
-  useEffect(() => {
-    if (loading) return;
-    if (!user) {
-      fetchUser();
-    }
+  // useEffect(() => {
+  //   if (loading) return;
+  //   if (!currentUser) {
+  //     fetchUser();
+  //   }
 
-  }, [user, loading]);
+  // }, [currentUser]);
 
 
   return (

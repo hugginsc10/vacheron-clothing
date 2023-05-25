@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch} from 'react-redux';
 import { clearItemFromCart, addItem, removeItem } from '../../redux/cart/cartSlice'
 
 import './checkout-item.scss';
 
 const CheckoutItem = ({ cartItem, clearItem, addItem, removeItem }) => {
+  const dispatch = useDispatch();
   const { name, imageUrl, price, quantity } = cartItem;
   return (
     <div className="checkout-item">

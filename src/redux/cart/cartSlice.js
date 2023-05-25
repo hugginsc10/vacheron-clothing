@@ -32,11 +32,26 @@ export const selectCartItems = createSelector(
     [selectCart],
     cart => cart.hidden
   )
-export const existingCartItems = (cartItems, cartItemToAdd) => {
-    return cartItems.find(
-        (cartItem) => cartItem.id === cartItemToAdd.id
-        )
+
+export const existingCartItem = (selectCartItems, cartItemToAdd) => {
+    console.log(selectCartItems);
+    return selectCartItems.find(cartItem => cartItem.id === cartItemToAdd.id)
+
+}
+
+const addToCart = (selectCartItems, cartItemToAdd) => {
+    if (existingCartItem(selectCartItems, cartItemToAdd)) {
+        return selectCartItems.map(
+            cartItem =>
+                cartItem.id === cartItemToAdd.id ?
+                 cartItem.quantity += 1 : cartItem &&
+                console.log(cartItem)
+                )
+
     }
+    return [...selectCartItems, { ...cartItemToAdd, quantity: 1 }];
+}
+
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -45,33 +60,35 @@ const cartSlice = createSlice({
         toggleCartHidden: (state) => {
             state.hidden = !state.hidden
         },
+        // addItemToCart: (state, action) => {
+        //     state.cartItems = addToCart(state.cartItems, action.payload)
+        // },
         addItem: {
             reducer(state, action) {
-            state.cartItems.push(action.payload)
+                const { id } = action.payload;
+                const existingCartItem = state.cartItems.find((cartItem) => cartItem.id === id);
+                if (existingCartItem) {
+                    existingCartItem.quantity += 1;
+                } else {
+                    state.cartItems.push({...action.payload, quantity: 1})
+                }
             },
             prepare(item) {
-                const existingCartItem = initialState.cartItems.find(cartItem => cartItem.id === item.id)
-                if (existingCartItem) {
-                    return {
-                        payload: {
-                            ...item,
-                            quantity: item.quantity + 1
-                        }
-                    }
-                }
-                return {
-                    payload: {
-                        ...item,
-                        quantity: 1
+               return {
+                    payload: item,
                     }
                 }
 
-            }
-
-        },
+            },
         removeItem: (state, action) => {
-            state.cartItems = state.cartItems.filter(
-                cartItem => cartItem.id !== action.payload.id)
+            const existingCartItem = state.cartItems.find((cartItem) => cartItem.id === action.payload.id)
+            if (existingCartItem) {
+                existingCartItem.quantity -= 1;
+            }
+            if (existingCartItem.quantity === 0) {
+                state.cartItems = state.cartItems.filter(
+                    cartItem => cartItem.id !== action.payload.id)
+            }
         },
         clearItemFromCart: (state, action) => {
             state.cartItems = state.cartItems.filter(
@@ -81,6 +98,6 @@ const cartSlice = createSlice({
 
 })
 
-export const { toggleCartHidden, addItem, removeItem, clearItemFromCart } = cartSlice.actions
+export const { toggleCartHidden, addItem, addItemToCart, removeItem, clearItemFromCart } = cartSlice.actions
 
 export default cartSlice.reducer
