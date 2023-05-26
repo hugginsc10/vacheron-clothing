@@ -21,23 +21,7 @@ import { signInWithGoogle, signOut} from './redux/authMiddleware';
 const App = () => {
   const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(auth);
-  const currentUser = useSelector(selectCurrentUser)
-
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (userAuth) => {
-  //     if (userAuth) {
-  //       dispatch(
-  //         login({
-  //         uid: userAuth.uid,
-  //         email: userAuth.email,
-  //         displayName: userAuth.displayName,
-  //       })
-  //       )
-  //     } else {
-  //       dispatch(logout())
-  //     }
-  //   })
-  // }, [])
+  const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
@@ -52,7 +36,7 @@ const App = () => {
   }, [dispatch])
 
 
- 
+
 
   return (
           <div>
