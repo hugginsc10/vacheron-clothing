@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import './App.css'
 
-import { setCurrentUser, selectCurrentUser, login, logout } from './redux/user/userSlice';
+import { setCurrentUser, selectCurrentUser } from './redux/user/userSlice';
 import {  useSelector, useDispatch } from 'react-redux';
 import HomePage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
