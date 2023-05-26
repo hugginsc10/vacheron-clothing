@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { auth } from "../../firebase/firebase.utils";
-import { useAuthState } from "react-firebase-hooks/auth";
+
 
 const initialState = {
     currentUser: null,
