@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import './header.scss';
 import { auth, logout } from '../../firebase/firebase.utils'
@@ -15,7 +14,6 @@ import { selectCurrentUser } from '../../redux/user/userSlice';
 const Header = ({ currentUser }) => {
   const hidden = useSelector(selectCartHidden);
   const currUser = useSelector(selectCurrentUser);
-  const [user, loading, error] = useAuthState(auth);
   return (
     <div className='header'>
       <Link className='logo-container' to='/'>

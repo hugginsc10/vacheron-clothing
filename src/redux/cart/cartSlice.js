@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
+import { createSlice, createSelector } from '@reduxjs/toolkit'
 
 
 
@@ -39,18 +39,18 @@ export const existingCartItem = (selectCartItems, cartItemToAdd) => {
 
 }
 
-const addToCart = (selectCartItems, cartItemToAdd) => {
-    if (existingCartItem(selectCartItems, cartItemToAdd)) {
-        return selectCartItems.map(
-            cartItem =>
-                cartItem.id === cartItemToAdd.id ?
-                 cartItem.quantity += 1 : cartItem &&
-                console.log(cartItem)
-                )
+// const addToCart = (selectCartItems, cartItemToAdd) => {
+//     if (existingCartItem(selectCartItems, cartItemToAdd)) {
+//         return selectCartItems.map(
+//             cartItem =>
+//                 cartItem.id === cartItemToAdd.id ?
+//                  cartItem.quantity += 1 : cartItem &&
+//                 console.log(cartItem)
+//                 )
 
-    }
-    return [...selectCartItems, { ...cartItemToAdd, quantity: 1 }];
-}
+//     }
+//     return [...selectCartItems, { ...cartItemToAdd, quantity: 1 }];
+// }
 
 
 const cartSlice = createSlice({
@@ -60,9 +60,6 @@ const cartSlice = createSlice({
         toggleCartHidden: (state) => {
             state.hidden = !state.hidden
         },
-        // addItemToCart: (state, action) => {
-        //     state.cartItems = addToCart(state.cartItems, action.payload)
-        // },
         addItem: {
             reducer(state, action) {
                 const { id } = action.payload;

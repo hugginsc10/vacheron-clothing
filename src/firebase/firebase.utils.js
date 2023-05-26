@@ -7,8 +7,6 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged,
-  updateProfile
 } from "firebase/auth";
 import {
   getFirestore,
@@ -48,7 +46,6 @@ export const subscribeToAuthChanges = (handleAuthChange) => {
 export const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
-    const token = res.user.accessToken;
     const user = res.user;
 
     const q = query(collection(db, "users"), where("uid", "==", user.uid));

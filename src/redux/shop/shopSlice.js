@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit'
-import { app, convertCollectionsSnapshotToMap, db } from '../../firebase/firebase.utils'
-import { collection, getDocs, query, where, getFirestore, addDoc } from "firebase/firestore";
+import {  convertCollectionsSnapshotToMap, db } from '../../firebase/firebase.utils'
+import { collection, getDocs } from "firebase/firestore";
 
 const initialState = {
     collections: null,
