@@ -17,7 +17,8 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  updateProfile
 } from "firebase/auth";
 import {
   getFirestore,
@@ -28,7 +29,7 @@ import {
   addDoc,
   writeBatch
 } from "firebase/firestore";
-
+import {useDispatch} from "react-redux";
 const config = {
   apiKey: `${process.env.REACT_APP_FIREBASE_KEY}` || 'mock_key',
   authDomain: `${process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}`,
@@ -40,18 +41,19 @@ const config = {
   measurementId: `${process.env.REACT_APP_FIREBASE_MEASUREMNT_ID}`
 };
 
-
-
-// export const auth = firebase.auth();
-// export const firestore = firebase.firestore();
-// provider.setCustomParameters({ prompt: 'select_account' });
-// const provider = new firebase.auth.GoogleAuthProvider();
-// export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export const app = firebase.initializeApp(config);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+export const googleProvider = new GoogleAuthProvider();
 
+export const loginWithGoogle = async () => {
+  return await auth.signInWithPopup(googleProvider)
+}
+export const subscribeToAuthChanges = (handleAuthChange) => {
+  auth.onAuthStateChanged((user) => {
+    handleAuthChange(user)
+  })
+}
 export const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);

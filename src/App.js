@@ -7,7 +7,7 @@ import {
 import './App.css'
 
 import { setCurrentUser, selectCurrentUser, login, logout } from './redux/user/userSlice';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import {  useSelector, useDispatch } from 'react-redux';
 import HomePage from './pages/homepage/homepage';
 import ShopPage from './pages/shop/shop';
 import CheckoutPage from './pages/checkout/checkout';
@@ -15,30 +15,41 @@ import Header from './components/header/header';
 import LoginAndRegisterPage from './pages/login-register-page/login-register-page'
 import { auth, createUserProfileDocument, addCollectionAndDocuments, db} from './firebase/firebase.utils';
 import { onAuthStateChanged } from 'firebase/auth';
-import { createStructuredSelector } from 'reselect';
-import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { collection, getDoc, query, where } from 'firebase/firestore';
+import { signInWithGoogle, signOut} from './redux/authMiddleware';
 const App = () => {
   const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(auth);
   const currentUser = useSelector(selectCurrentUser)
 
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (userAuth) => {
+  //     if (userAuth) {
+  //       dispatch(
+  //         login({
+  //         uid: userAuth.uid,
+  //         email: userAuth.email,
+  //         displayName: userAuth.displayName,
+  //       })
+  //       )
+  //     } else {
+  //       dispatch(logout())
+  //     }
+  //   })
+  // }, [])
+
   useEffect(() => {
-    onAuthStateChanged(auth, (userAuth) => {
+    const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
-        dispatch(
-          login({
-          uid: userAuth.uid,
-          email: userAuth.email,
-          displayName: userAuth.displayName,
-        })
-        )
+        dispatch(setCurrentUser(userAuth))
       } else {
-        dispatch(logout())
+        dispatch(setCurrentUser(null));
       }
     })
-  }, [])
+    return () => unsubscribe();
+  }, [dispatch])
+
 
   const fetchUser = async () => {
 
@@ -53,14 +64,6 @@ const App = () => {
     console.error(err);
   }
   }
-  // useEffect(() => {
-  //   if (loading) return;
-  //   if (!currentUser) {
-  //     fetchUser();
-  //   }
-
-  // }, [currentUser]);
-
 
   return (
           <div>
@@ -71,7 +74,7 @@ const App = () => {
                 <Route path='/shop' component={ShopPage} />
                 <Route path='/checkout' component={CheckoutPage} />
                 <Route exact path='/login' render={() =>
-                  user ? (
+                  currentUser ? (
                     <Redirect to='/' />
                   ) : (
                       <LoginAndRegisterPage />

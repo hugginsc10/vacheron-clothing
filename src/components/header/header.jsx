@@ -15,7 +15,6 @@ import { selectCurrentUser } from '../../redux/user/userSlice';
 const Header = ({ currentUser }) => {
   const hidden = useSelector(selectCartHidden);
   const currUser = useSelector(selectCurrentUser);
-  console.log(currUser);
   const [user, loading, error] = useAuthState(auth);
   return (
     <div className='header'>

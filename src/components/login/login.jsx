@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import FormInput from '../form-input/form-input'
 import './login.scss'
 import CustomButton from '../custom-button/custom-button'
-import {auth, signInWithGoogle, logInWithEmailAndPassword } from '../../firebase/firebase.utils'
+import {auth, signInWithGoogle, logInWithEmailAndPassword, loginWithGoogle } from '../../firebase/firebase.utils'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { selectCurrentUser } from "../../redux/user/userSlice";
 
@@ -55,7 +55,7 @@ const Login = () => {
 
           <div className='buttons'>
           <CustomButton type='submit' onClick={(e) => handleSubmit(e)}> Sign In </CustomButton>
-          <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+          <CustomButton onClick={() => loginWithGoogle()} isGoogleSignIn>
             {''}Sign in with Google{' '}
           </CustomButton>
           </div>
