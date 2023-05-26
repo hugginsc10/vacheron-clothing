@@ -19,7 +19,7 @@ import {
   addDoc,
   writeBatch
 } from "firebase/firestore";
-import {useDispatch} from "react-redux";
+
 const config = {
   apiKey: `${process.env.REACT_APP_FIREBASE_KEY}` || 'mock_key',
   authDomain: `${process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}`,
@@ -35,9 +35,10 @@ export const app = firebase.initializeApp(config);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-export const loginWithGoogle = async () => {
-  return await auth.signInWithPopup(googleProvider)
+export const loginWithGoogle = () => {
+  return signInWithPopup(auth, googleProvider)
 }
 export const subscribeToAuthChanges = (handleAuthChange) => {
   auth.onAuthStateChanged((user) => {
@@ -47,9 +48,8 @@ export const subscribeToAuthChanges = (handleAuthChange) => {
 export const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
-    const token = res.credential.accessToken;
+    const token = res.user.accessToken;
     const user = res.user;
-    console.log(token, user);
 
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);

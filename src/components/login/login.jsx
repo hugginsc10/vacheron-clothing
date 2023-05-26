@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import FormInput from '../form-input/form-input'
 import './login.scss'
 import CustomButton from '../custom-button/custom-button'
-import {auth, signInWithGoogle, loginWithGoogle, logInWithEmailAndPassword } from '../../firebase/firebase.utils'
+import {auth, signInWithGoogle,  loginWithGoogle, logInWithEmailAndPassword } from '../../firebase/firebase.utils'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { selectCurrentUser } from "../../redux/user/userSlice";
 import {  signOut } from "../../redux/authMiddleware";
@@ -11,17 +11,21 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
 
-  const handleSubmit =  async event => {
-
-    event.preventDefault();
-      try {
-      await logInWithEmailAndPassword(email, password)
+  const handleSignIn = async () => {
+    try {
+        await logInWithEmailAndPassword(email, password);
     } catch (error) {
       console.log(error)
     }
 
   }
-
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle()
+    } catch (error) {
+      console.log(error)
+    }
+}
   return (
     <div className="sign-in">
         <h2>I already have an account</h2>
@@ -43,13 +47,13 @@ const Login = () => {
             label="Password"
             required />
 
+       </form>
           <div className='buttons'>
-          <CustomButton type='submit' onClick={(e) => handleSubmit(e)}> Sign In </CustomButton>
-          <CustomButton onClick={() => signInWithGoogle()}>
+          <CustomButton type='submit' onClick={(e) => handleSignIn(e)}> Sign In </CustomButton>
+          <CustomButton onClick={(e) => handleGoogleSignIn(e)} isGoogleSignIn>
             {''}Sign in with Google{' '}
           </CustomButton>
           </div>
-       </form>
      </div>
   )
 
