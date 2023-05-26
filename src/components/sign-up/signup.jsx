@@ -12,6 +12,23 @@ const SignUp = () => {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("passwords don't match")
+      return;
+    }
+    try {
+      await registerWithEmailAndPassword(auth, email, password)
+      setDisplayName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
          <div className='sign-up'>
             <h2 className='title'>I do not have an account</h2>
@@ -45,7 +62,7 @@ const SignUp = () => {
                 handleChange={(e) => setConfirmPassword(e.target.value)}
                 label='Confirm Password'
                 required />
-              <CustomButton type='submit' onClick={() => registerWithEmailAndPassword(auth, email, password)}>SIGN UP</CustomButton>
+              <CustomButton type='submit' onClick={(e) => handleSubmit(e)}>SIGN UP</CustomButton>
             </form>
          </div>
         );

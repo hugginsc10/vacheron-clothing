@@ -13,10 +13,11 @@ import ShopPage from './pages/shop/shop';
 import CheckoutPage from './pages/checkout/checkout';
 import Header from './components/header/header';
 import LoginAndRegisterPage from './pages/login-register-page/login-register-page'
-import { auth } from './firebase/firebase.utils';
+import { auth, config } from './firebase/firebase.utils';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const App = () => {
+
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
 
