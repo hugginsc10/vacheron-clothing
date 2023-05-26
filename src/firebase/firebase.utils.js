@@ -1,13 +1,3 @@
-// import {
-//   firebase,
-//   getAuth,
-//   getFirestore,
-//   GoogleAuthProvider,
-//   signInWithPopup
-//  } from 'firebase/app';
-// import 'firebase/firestore';
-// import 'firebase/auth';
-
 import firebase from 'firebase/compat/app'
 import {
   GoogleAuthProvider,

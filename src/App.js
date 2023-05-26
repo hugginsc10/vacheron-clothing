@@ -42,6 +42,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
+        console.log(userAuth)
         dispatch(setCurrentUser(userAuth))
       } else {
         dispatch(setCurrentUser(null));
@@ -51,19 +52,7 @@ const App = () => {
   }, [dispatch])
 
 
-  const fetchUser = async () => {
-
-    try {
-      const q = query(collection(db, "users"), where("uid", "==", user.uid));
-      console.log(q)
-      const doc = await getDoc(q);
-      console.log(doc, 'fetchUser - doc');
-      const data = doc.docs[0].data();
-      dispatch(setCurrentUser(data));
-    } catch (err) {
-    console.error(err);
-  }
-  }
+ 
 
   return (
           <div>
