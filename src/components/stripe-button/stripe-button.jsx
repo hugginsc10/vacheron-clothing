@@ -10,13 +10,13 @@ const StripeCheckoutButton = ({ price }) => {
     alert('Payment Successful')
   }
   return (
-    <StripeCheckout 
+    <StripeCheckout
       label='Pay Now'
       name='Vacheron Clothing'
       billingAddress
       shippingAddress
       image='https://svgshare.com/i/CUz.svg'
-      description={`Your total is ${price}`}
+      description={`Your total is $${price}`}
       amount={priceForStripe}
       panelLavel='Pay Now'
       token={onToken}
