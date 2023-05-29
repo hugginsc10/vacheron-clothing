@@ -17,7 +17,8 @@ const Login = () => {
     }
 
   }
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (e) => {
+    e.preventDefault();
     try {
       await signInWithGoogle()
     } catch (error) {
