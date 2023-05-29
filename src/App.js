@@ -13,16 +13,16 @@ import ShopPage from './pages/shop/shop';
 import CheckoutPage from './pages/checkout/checkout';
 import Header from './components/header/header';
 import LoginAndRegisterPage from './pages/login-register-page/login-register-page'
-import { auth } from './firebase/firebase.utils';
-import { onAuthStateChanged } from 'firebase/auth';
+import { auth, app } from './firebase/firebase.utils';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 const App = () => {
-
+  const googleauth = getAuth(app);
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    console.log(auth)
+    console.log(googleauth)
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         dispatch(setCurrentUser(userAuth))
