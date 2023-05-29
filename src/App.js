@@ -17,11 +17,12 @@ import { auth } from './firebase/firebase.utils';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const App = () => {
-  
+
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
+    console.log(`${process.env.REACT_APP_FIREBASE_API_KEY}`)
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         dispatch(setCurrentUser(userAuth))

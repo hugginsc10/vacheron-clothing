@@ -17,8 +17,7 @@ const Login = () => {
     }
 
   }
-  const handleGoogleSignIn = async (e) => {
-    e.preventDefault();
+  const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle()
     } catch (error) {
@@ -49,7 +48,7 @@ const Login = () => {
        </form>
           <div className='buttons'>
           <CustomButton type='submit' onClick={(e) => handleSignIn(e)}> Sign In </CustomButton>
-          <CustomButton onClick={(e) => handleGoogleSignIn(e)} isGoogleSignIn>
+          <CustomButton onClick={() => handleGoogleSignIn()} isGoogleSignIn>
             {''}Sign in with Google{' '}
           </CustomButton>
           </div>
