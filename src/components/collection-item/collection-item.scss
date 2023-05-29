@@ -55,14 +55,20 @@
     height: 300px;
     margin-bottom: 0;
 
+    .custom-button {
+      min-width: 98%;
+      padding: 0 20px 0 20px;
+      backdrop-filter: blur(10px);
+    }
+
 
     &:hover {
       .image {
         opacity: unset;
       }
       .custom-button {
-        top: 70%;
-        width: 80%;
+        top: 50%;
+        max-width: 100%;
         opacity: 0.7;
         position: absolute;
         display: block;

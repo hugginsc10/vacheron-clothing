@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore";
 
 const config = {
-  apiKey: `${process.env.REACT_APP_FIREBASE_KEY}` || 'mock_key',
+  apiKey: `${process.env.REACT_APP_FIREBASE_KEY}`,
   authDomain: `${process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}`,
   databaseURL: `${process.env.REACT_APP_FIREBASE_DATABSE_URL}`,
   projectId: `${process.env.REACT_APP_FIREBASE_PROJECT_ID}`,
