@@ -21,6 +21,7 @@ const App = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
+    console.log(auth);
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         console.log(auth);
