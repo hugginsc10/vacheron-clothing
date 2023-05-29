@@ -31,7 +31,7 @@ const App = () => {
       }
     })
     return () => unsubscribe();
-  }, [dispatch])
+  }, [dispatch, googleauth])
 
   return (
           <div>
