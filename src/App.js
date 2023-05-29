@@ -22,7 +22,6 @@ const App = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_FIREBASE_KEY)
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         dispatch(setCurrentUser(userAuth))
