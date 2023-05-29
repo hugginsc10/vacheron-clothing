@@ -18,9 +18,37 @@
     align-items: center;
     justify-content: flex-end;
 
-    .option {
+    .shop {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    .contact {
       padding: 10px 15px;
       cursor: pointer;
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .header {
+    height: 60px;
+    margin-bottom: 0px;
+    .logo-container {
+      width: 50px;
+      padding: 10px;
+    }
+  }
+
+
+  .options {
+    width: 80%;
+
+    .shop {
+      display: none;
+    }
+    .contact {
+      display: none;
+    }
+  }
+}
+
