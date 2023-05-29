@@ -17,7 +17,7 @@ import { auth } from './firebase/firebase.utils';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const App = () => {
-
+  
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
 
