@@ -55,12 +55,16 @@ export const fetchCollectionsStartAsync = createAsyncThunk(
 
 )
 
+export const selectIsFetching = (state) => state.shop.isFetching
 export const selectCollections = (state) => state.shop.collections
 export const selectCollection = (collectionUrlParam) => createSelector(
     [selectCollections],
     collections => (collections ? collections[collectionUrlParam] : null)
 )
-
+export const selectCollectionsForPreview = () => createSelector(
+    [selectCollections],
+    collections => collections ? Object.keys(collections).map(key => collections[key]) : []
+)
 export const { fetchCollectionsStart, fetchCollectionsSuccess, fetchCollectionsFailure } = shopSlice.actions
 
 export default shopSlice.reducer
