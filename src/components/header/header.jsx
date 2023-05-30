@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import './header.scss';
-import { auth, logout } from '../../firebase/firebase.utils'
+import { logout } from '../../firebase/firebase.utils'
 import CartIcon from '../cart-icon/cart-icon';
 import CartDropdown from '../cart-dropdown/cart-dropdown';
 import { createStructuredSelector } from 'reselect';
