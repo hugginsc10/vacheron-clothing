@@ -14,6 +14,7 @@
   .options {
     width: 50%;
     height: 100%;
+    padding-top: 3%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -27,6 +28,7 @@
       cursor: pointer;
     }
     .sign-out {
+      padding: 10px 15px;
       cursor: pointer;
     }
   }
@@ -45,12 +47,16 @@
 
   .options {
     width: 80%;
+    padding-top: 5%;
 
     .shop {
       display: none;
     }
     .contact {
       display: none;
+    }
+    .sign-out {
+      padding: unset;
     }
   }
 }
