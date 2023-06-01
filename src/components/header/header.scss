@@ -26,9 +26,10 @@
     .contact {
       padding: 10px 15px;
       cursor: pointer;
+      display: none;
     }
     .sign-out {
-      padding: 10px 15px;
+      padding: 0 1%;
       cursor: pointer;
     }
   }
@@ -52,12 +53,7 @@
     .shop {
       display: none;
     }
-    .contact {
-      display: none;
-    }
-    .sign-out {
-      padding: unset;
-    }
+
   }
 }
 
